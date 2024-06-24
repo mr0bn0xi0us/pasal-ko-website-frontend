@@ -1,0 +1,21 @@
+{% extends "base.html" %}
+
+{% block title %}Home{% endblock %}
+
+{% block navbar %}
+    {{ super() }}
+{% endblock %}
+
+{% block content %}
+    <div class="container">
+        <h1>Available Products</h1>
+        {% for item in products %}
+            <div class="product">
+                <h2>{{ item.Product.name }}</h2>
+                <p>Price: Rs. {{ item.Product.price }}</p>
+                <p>Availability: {{ "Available" if item.Product.is_available else "Not Available" }}</p>
+                <a href="/{{ item.Product.id }}" class="view-details">View Details</a>
+            </div>
+        {% endfor %}
+    </div>
+{% endblock %}

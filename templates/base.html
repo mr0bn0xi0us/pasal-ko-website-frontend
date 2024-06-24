@@ -1,0 +1,40 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Bhandari Stores - {% block title %}{% endblock %}</title>
+    <link rel="stylesheet" href="/static/styles.css"> <!-- Link to external CSS file -->
+</head>
+<body>
+    {% block navbar %}
+    <nav class="navbar">
+        <div class="navbar-brand">
+            <a href="/">
+                Bhandari Stores
+            </a>
+        </div>
+        <ul class="navbar-nav">
+            <li class="nav-item">
+                <form action="/" method="get" class="search-form">
+                    <input type="text" name="search" placeholder="Search products...">
+                    <button type="submit">Search</button>
+                </form>
+            </li>
+            <li class="nav-item">
+                <a href="/login" class="nav-link">Login</a>
+            </li>
+            <li class="nav-item">
+                <a href="/signup" class="nav-link">Sign Up</a>
+            </li>
+        </ul>
+    </nav>
+    {% endblock %}
+    <div class="container">
+        {% block content %}{% endblock %}
+    </div>
+    <footer>
+        <p>Product List &copy; 2024</p>
+    </footer>
+</body>
+</html>
