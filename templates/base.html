@@ -21,11 +21,11 @@
                     <button type="submit">Search</button>
                 </form>
             </li>
-            <li class="nav-item">
+            <li class="nav-item" id="login-item">
                 <a href="/login" class="nav-link">Login</a>
             </li>
-            <li class="nav-item">
-                <a href="/signup" class="nav-link">Sign Up</a>
+            <li class="nav-item" id="user-item" style="display: none;">
+                <span id="username"></span>
             </li>
         </ul>
     </nav>
@@ -36,5 +36,72 @@
     <footer>
         <p>Product List &copy; 2024</p>
     </footer>
+
+    <script>
+    document.addEventListener("DOMContentLoaded", async function() {
+        var accessToken = localStorage.getItem("access_token");
+
+        if (!accessToken) {
+            accessToken = getCookie("access_token");
+            if (accessToken) {
+                localStorage.setItem("access_token", accessToken);
+            } else {
+                console.log("Access Token not found in cookies.");
+            }
+        }
+
+        if (accessToken) {
+            const parsedToken = parseJwt(accessToken);
+            if (parsedToken && parsedToken.user_id) {
+                const userId = parsedToken.user_id;
+                try {
+                    const response = await fetch(`https://pasal-ko-website-production.up.railway.app/users/${userId}`, {
+                        headers: {
+                            'Authorization': `Bearer ${accessToken}`
+                        }
+                    });
+
+                    if (response.ok) {
+                        const user = await response.json();
+                        document.getElementById('login-item').style.display = 'none';
+                        document.getElementById('user-item').style.display = 'block';
+                        document.getElementById('username').textContent = `Welcome, ${user.username}`;
+                    }
+                } catch (error) {
+                    console.error('Error fetching user data:', error);
+                }
+            }
+        }
+    });
+
+    function getCookie(name) {
+        var cookieValue = null;
+        if (document.cookie && document.cookie !== '') {
+            var cookies = document.cookie.split(';');
+            for (var i = 0; i < cookies.length; i++) {
+                var cookie = cookies[i].trim();
+                if (cookie.substring(0, name.length + 1) === (name + '=')) {
+                    cookieValue = cookie.substring(name.length + 1);
+                    break;
+                }
+            }
+        }
+        return cookieValue;
+    }
+
+    function parseJwt(token) {
+        try {
+            const base64Url = token.split('.')[1];
+            const base64 = base64Url.replace(/-/g, '+').replace(/_/g, '/');
+            const jsonPayload = decodeURIComponent(atob(base64).split('').map(function(c) {
+                return '%' + ('00' + c.charCodeAt(0).toString(16)).slice(-2);
+            }).join(''));
+
+            return JSON.parse(jsonPayload);
+        } catch (e) {
+            return null;
+        }
+    }
+    </script>
 </body>
 </html>

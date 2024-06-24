@@ -1,5 +1,9 @@
+/* Basic styles */
 body {
     font-family: Arial, sans-serif;
+    background-color: #f0f0f0;
+    margin: 0;
+    padding: 0;
 }
 
 .container {
@@ -122,4 +126,44 @@ header h1 {
 
 .product a.view-details:hover {
     background-color: #0056b3; /* Darker background color on hover */
+}
+.login-container {
+    padding: 30px; /* Increased padding for more spacing */
+    background-color: #fff;
+    border: 1px solid #ccc;
+    border-radius: 20px;
+    width: 300px;
+    margin: 50px auto;
+}
+
+.form-group {
+    margin-bottom: 20px; /* Increased margin between form groups */
+}
+
+label {
+    display: block;
+    margin-bottom: 10px; /* Increased margin below labels */
+}
+
+input[type="text"],
+input[type="password"] {
+    width: calc(100% - 20px);
+    padding: 10px;
+    font-size: 16px;
+    border: 1px solid #ccc;
+    border-radius: 20px;
+}
+
+button {
+    background-color: #007bff;
+    color: #fff;
+    border: none;
+    padding: 12px 20px; /* Slightly increased padding for button */
+    border-radius: 20px;
+    cursor: pointer;
+    font-size: 16px;
+}
+
+button:hover {
+    background-color: #0056b3;
 }
